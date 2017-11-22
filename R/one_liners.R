@@ -6,6 +6,7 @@
 #' @param x numeric object to be test
 #' @param tol tolerence, default is sq root of machine epsilon
 #'
+#' @export
 #' @examples
 #' is.wholenumber(1.00000001, tol = 1.5e-08)
 #' # TRUE
