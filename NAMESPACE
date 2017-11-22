@@ -2,4 +2,5 @@
 
 export(age)
 export(is.wholenumber)
+export(lmprint)
 export(per_day)
