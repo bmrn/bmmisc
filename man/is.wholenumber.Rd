@@ -2,7 +2,7 @@
 % Please edit documentation in R/one_liners.R
 \name{is.wholenumber}
 \alias{is.wholenumber}
-\title{is.wholenumer()}
+\title{is wholenumer?}
 \usage{
 is.wholenumber(x, tol = .Machine$double.eps^0.5)
 }

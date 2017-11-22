@@ -1,4 +1,4 @@
-#' is.wholenumer()
+#' is wholenumer?
 #'
 #' Tests if numeric object is a whole number within a given tolerence.
 #' Note: I copied this function from the web and I don't remember where from.
@@ -11,5 +11,6 @@
 #' # TRUE
 #' is.wholenumber(1.0000001, tol = 1.5e-08)
 #' # FALSE
-
-is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol*2
+is.wholenumber <- function(x, tol = .Machine$double.eps^0.5){
+  abs(x - round(x)) < tol*2
+}
