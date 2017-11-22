@@ -16,7 +16,7 @@ lmprint <- function(loadings, cutoff = 0.35, digits = 3) {
   print(ifelse(abs(loadings) > cutoff, loadings, NA),
         digits = digits, na.print = "")
 }
-#' is wholenumer
+#' test for wholenumber
 #'
 #' Tests if numeric object is a whole number within a given tolerence.
 #' Note: I copied this function from the web and I don't remember where from.
@@ -27,10 +27,10 @@ lmprint <- function(loadings, cutoff = 0.35, digits = 3) {
 #' @export
 #' @keywords numeric
 #' @examples
-#' is.wholenumber(1.00000001, tol = 1.5e-08)
+#' iswholenumber(1.00000001, tol = 1.5e-08)
 #' # TRUE
-#' is.wholenumber(1.0000001, tol = 1.5e-08)
+#' iswholenumber(1.0000001, tol = 1.5e-08)
 #' # FALSE
-is.wholenumber <- function(x, tol = .Machine$double.eps^0.5){
+iswholenumber <- function(x, tol = .Machine$double.eps^0.5){
   abs(x - round(x)) < tol*2
 }

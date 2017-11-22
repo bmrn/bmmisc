@@ -5,7 +5,7 @@
 #' e.g. "YYYY-MM-DD"
 #' @param to date POSIXlt/string or similar to be converted to POSIXlt.
 #' Defaults to to now()
-#' 
+#'
 #' @keywords age
 #' @export
 #' @examples
@@ -14,9 +14,9 @@
 age <- function(from, to = strptime(now(), format = "%Y-%m-%d")) {
   from_lt = as.POSIXlt(from)
   to_lt = as.POSIXlt(to)
-  
+
   age = to_lt$year - from_lt$year
-  
+
   ifelse(to_lt$mon < from_lt$mon |
            (to_lt$mon == from_lt$mon & to_lt$mday < from_lt$mday),
          age - 1, age)
@@ -32,11 +32,10 @@ age <- function(from, to = strptime(now(), format = "%Y-%m-%d")) {
 #' @param freq frequency required per 24 hour period.
 #' @param n_days number of days to be considered, from p_start. Only the
 #' earliest of p_end/p_start  + n_days is taken.
-#' 
+#'
 #' @keywords hourly daily per
 #' @export
 #' @examples
-#' 
 #' datims <- c("2015-12-06 08:44:00",
 #' "2015-12-06 12:00:00", "2015-12-06 13:00:00", "2015-12-06 16:00:00",
 #' "2015-12-06 16:00:00", "2015-12-06 20:20:00", "2015-12-06 23:45:00",
@@ -44,13 +43,13 @@ age <- function(from, to = strptime(now(), format = "%Y-%m-%d")) {
 #' "2015-12-07 23:30:00", "2015-12-08 04:00:00", "2015-12-08 07:30:00",
 #' "2015-12-08 12:00:00")
 #' datims <- as.POSIXct(datims)
-#' 
-#' per_day(datims, datims[1], datims[14], freq = 6, n_days = 3)
+#'
+#' perday(datims, datims[1], datims[14], freq = 6, n_days = 3)
 #' # FALSE
-#' per_day(datims, datims[1], datims[14], freq = 5, n_days = 3)
+#' perday(datims, datims[1], datims[14], freq = 5, n_days = 3)
 #' # TRUE
 
-per_day <- function(datims, p_start, p_end, freq,
+perday <- function(datims, p_start, p_end, freq,
                      n_days = 3) {
   # check args, catch invalid data
   if(any(missing(datims),
@@ -68,9 +67,9 @@ per_day <- function(datims, p_start, p_end, freq,
     warning(paste0("p_start =", p_start, "after p_end = ", p_end))
     p_end = p_start + hours(n_days * 24)
   }
-  
+
   p_dur_days = as.numeric(as.duration(interval(p_start, p_end)), "days")
-  
+
   # set intervals: e.g. if px is discharged after 36 hours intervals are:
   # day1: (p_start, p_start + 24) [duration == 1 day]
   # day2: (p_start + 24, p_end)  [duration == 12 hrs]
@@ -80,8 +79,8 @@ per_day <- function(datims, p_start, p_end, freq,
                          as.integer(round(24 * 60 *
                                             pmax(0:(n_days-1),
                                                  pmin(p_dur_days, 1:n_days))))))
- 
-  # set required frequency in each interval 
+
+  # set required frequency in each interval
   req_freq = floor(as.numeric(as.duration(intervals), "days") * freq)
 
   # test if each datim is in each interval bool_mat has (row, col) = (n_datim, n_days)
@@ -89,7 +88,7 @@ per_day <- function(datims, p_start, p_end, freq,
 
   if(n_days > 1) period_sums = colSums(bool_mat)
   else if(n_days == 1) period_sums = sum(bool_mat)
-  
+
   return(all(period_sums >= req_freq))
 }
 
