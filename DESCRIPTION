@@ -2,7 +2,8 @@ Package: bmmisc
 Title: Misc Functions
 Version: 0.0.0.9000
 Authors@R: person("Ben", "McElduff", email = "ausben@gmail.com", role = c("aut", "cre"))
-Description: Collection of functions used in medical research that are help enough to be used twice.
+Description: Collection of useful functions for analyses and report preparation in R.
+URL: https://github.com/bmrn/bmmisc
 Depends: R (>= 3.4.2), lubridate (>= 1.7.1)
 License: MIT
 Encoding: UTF-8
