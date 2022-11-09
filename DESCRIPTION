@@ -5,7 +5,13 @@ Authors@R: person("Ben", "McElduff", email = "ausben@gmail.com", role = c("aut",
 Description: Collection of useful functions for analyses and report preparation in R.
 URL: https://github.com/bmrn/bmmisc
 Depends: R (>= 3.4.2), lubridate (>= 1.7.1)
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 7.2.1
+Imports: 
+    dplyr,
+    ggplot2,
+    rlang,
+    scales,
+    stats

@@ -11,7 +11,7 @@
 #' @examples
 #' age("1988-12-19", "2017-11-22")
 #' # 28
-age <- function(from, to = strptime(now(), format = "%Y-%m-%d")) {
+age <- function(from, to = strptime(lubridate::now(), format = "%Y-%m-%d")) {
   from_lt = as.POSIXlt(from)
   to_lt = as.POSIXlt(to)
 
@@ -50,7 +50,7 @@ age <- function(from, to = strptime(now(), format = "%Y-%m-%d")) {
 #' # TRUE
 
 perday <- function(datims, p_start, p_end, freq,
-                     n_days = 3) {
+                   n_days = 3) {
   # check args, catch invalid data
   if(any(missing(datims),
          missing(p_start),
@@ -58,33 +58,36 @@ perday <- function(datims, p_start, p_end, freq,
          missing(freq))) {
     stop("must provide args: datims, p_start, p_end, freq")
   }
-  if(is.na(p_end)) p_end = p_start + hours(n_days * 24)
+  if(is.na(p_end)) p_end = p_start + lubridate::hours(n_days * 24)
   if(is.na(p_start)) {
     warning("arg: p_start has value NA")
     return(NA)
   }
   if(p_end < p_start) {
     warning(paste0("p_start =", p_start, "after p_end = ", p_end))
-    p_end = p_start + hours(n_days * 24)
+    p_end = p_start + lubridate::hours(n_days * 24)
   }
 
-  p_dur_days = as.numeric(as.duration(interval(p_start, p_end)), "days")
+  p_dur_days <- as.numeric(
+    lubridate::as.duration(
+      lubridate::interval(p_start, p_end)),
+    "days")
 
   # set intervals: e.g. if px is discharged after 36 hours intervals are:
   # day1: (p_start, p_start + 24) [duration == 1 day]
   # day2: (p_start + 24, p_end)  [duration == 12 hrs]
   # day3+: (p_start + 48, p_start + 48) [duration == 0]
-  intervals = interval(p_start + hours(24 * (0:(n_days-1))),
-                       p_start + minutes(
-                         as.integer(round(24 * 60 *
-                                            pmax(0:(n_days-1),
-                                                 pmin(p_dur_days, 1:n_days))))))
+  intervals <- lubridate::interval(p_start + lubridate::hours(24 * (0:(n_days-1))),
+                                   p_start + lubridate::minutes(
+                                     as.integer(round(24 * 60 *
+                                                        pmax(0:(n_days-1),
+                                                             pmin(p_dur_days, 1:n_days))))))
 
   # set required frequency in each interval
-  req_freq = floor(as.numeric(as.duration(intervals), "days") * freq)
+  req_freq = floor(as.numeric(lubridate::as.duration(intervals), "days") * freq)
 
   # test if each datim is in each interval bool_mat has (row, col) = (n_datim, n_days)
-  bool_mat = t(mapply(`%within%`, datims,  MoreArgs = list(intervals)))
+  bool_mat = t(mapply(lubridate::`%within%`, datims,  MoreArgs = list(intervals)))
 
   if(n_days > 1) period_sums = colSums(bool_mat)
   else if(n_days == 1) period_sums = sum(bool_mat)

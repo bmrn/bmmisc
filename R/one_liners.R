@@ -39,7 +39,7 @@ iswholenumber <- function(x, tol = .Machine$double.eps^0.5){
 #'
 #' Returns the "decade" of a date-time object as an integer
 #' representing the first year of the decade. e.g. 1950L for the 1950's
-#' 
+#'
 #' Note: Setting decade is not supported.
 #'
 #' @param x a date-time object, e.g. Date, POSIXct, POSIXlt and others.
@@ -49,4 +49,4 @@ iswholenumber <- function(x, tol = .Machine$double.eps^0.5){
 #' @examples
 #' decade(as_date("1955-01-01"))
 #' # 1950
-decade <- function(x) as.integer(10 * floor(year(x)/10))
+decade <- function(x) as.integer(10 * floor(lubridate::year(x)/10))

@@ -4,7 +4,7 @@
 \alias{age}
 \title{Age in years}
 \usage{
-age(from, to = strptime(now(), format = "\%Y-\%m-\%d"))
+age(from, to = strptime(lubridate::now(), format = "\%Y-\%m-\%d"))
 }
 \arguments{
 \item{from}{date POSIXlt/string or similar to be converted to POSIXlt.
